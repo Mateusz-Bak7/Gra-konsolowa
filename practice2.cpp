@@ -23,26 +23,67 @@ public:
 	}
 };
 
+class Pipe{
+public:
+	int x;
+	Pipe(int startx){
+		x = startx;
+	}
+	void move(){
+		x--;
+	}
+};
+
+void drawboard(Bird bird, Pipe pipe){
+		for(int y = 0; y < 15        ; y++){
+			for(int x = 0; x < 70; x++){
+				if(bird.x == x && bird.y == y){
+					cout << "O";
+				}
+				else if(pipe.x == x){
+					cout << "|";
+				}
+				else if(bird.x != x || bird.y != y){
+					cout << ".";
+				}
+			}
+			cout << endl;
+		}
+	}
 
 int main(){
+	int framecounter = 0;
+	bool is_running = true;
 	Bird bird(5, 3);
+	Pipe pipe(19);
 
-	while(true){
+	while(is_running){
 	system("cls");
-	for(int y = 0; y < 10; y++){
-		for(int x = 0; x < 20; x++){
-			if (bird.x != x || bird.y != y){
-				cout << ".";
-			}
-			else{
-				cout << "O";
-			}
+	drawboard(bird, pipe);
+	if(_kbhit()){
+		char key;
+		key = _getch();
+		if(key == ' '){
+			bird.jump();
 		}
-		cout << endl;
 	}
+	pipe.move();
+	if(framecounter > 2){
 	bird.fall();
-	
-	Sleep(1000);
-}
-system("cls");
+	framecounter = 0;
+	}
+	if(bird.y > 15 || bird.y <= 0){
+
+		cout << R"(  ######   #####  ###    ### #######      ######  ##    ## ####### ######  
+ ##       ##   ## ####  #### ##          ##    ## ##    ## ##      ##   ## 
+ ##   ### ####### ## #### ## #####       ##    ## ##    ## #####   ######  
+ ##    ## ##   ## ##  ##  ## ##          ##    ##  ##  ##  ##      ##   ## 
+  ######  ##   ## ##      ## #######      ######    ####   ####### ##   ## 
+)";
+
+		is_running = false;
+	}
+	framecounter++;
+	Sleep(50);
+	}
 }
