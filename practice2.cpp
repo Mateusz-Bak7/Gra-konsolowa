@@ -68,10 +68,19 @@ int main(){
 	int randgap;
 	int randsize;
 	int framecounter = 0;
+	int userchoice;
+	int counter = 0;
 	Bird bird(5, 3);
 	pipes.push_back(Pipe(69, 4, 3));
 	pipes.push_back(Pipe(53, 6, 2));
 	pipes.push_back(Pipe(39, 5, 4));
+
+	cout << '#' * 79 << endl;
+	while(counter < 22){
+		cout << '#' << ' ' * 77 << '#' << endl;
+	}
+	cout << '#' * 79 << endl;
+	cin >> userchoice;
 
 	while(is_running){
 	system("cls");
