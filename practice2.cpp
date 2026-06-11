@@ -3,6 +3,7 @@
 #include <conio.h>
 #include <ctime>
 #include <vector>
+#include "testmenu.cpp"
 
 using namespace std;
 
@@ -40,19 +41,22 @@ public:
 	}
 };
 
-void drawboard(Bird bird, Pipe pipe){
+void drawboard(Bird bird, vector<Pipe> pipes){
 		for(int y = 0; y < 15; y++){
 			for(int x = 0; x < 70; x++){
 				if(bird.x == x && bird.y == y){
 					cout << "O";
 				}
-				else if(pipe.x == x){
-					if(pipe.gapy <= y && pipe.gapy + pipe.gapsize > y){
-						cout << ".";
+				else if(for(int i = 0; i < pipes.size(); i++)){
+					if(for(int i = 0; pipes.size(); i++)){
+						if(pipes.gapy <= y && pipes.gapy + pipes.gapsize > y){
+							cout << ".";
+							}
+						else{
+							cout << "|";
 						}
-					else{
-						cout << "|";
-					}
+						
+				}
 				}
 				else if(bird.x != x || bird.y != y){
 					cout << ".";
@@ -75,12 +79,41 @@ int main(){
 	pipes.push_back(Pipe(53, 6, 2));
 	pipes.push_back(Pipe(39, 5, 4));
 
-	cout << '#' * 79 << endl;
-	while(counter < 22){
-		cout << '#' << ' ' * 77 << '#' << endl;
-	}
-	cout << '#' * 79 << endl;
+	display();
 	cin >> userchoice;
+	switch(userchoice){
+		case 1:
+			rules();
+			if (_kbhit()){
+				main();
+				break;
+			}
+		case 2:
+			difficulty();
+			userchoice = _getch();
+			if(userchoice == '1'){
+
+			}
+			else if(userchoice == '2'){
+
+			}
+			else if(userchoice == '3'){
+
+			}
+			else if(userchoice == 'E'){
+				main();
+			}
+			else{
+				cout << "Niepoprawna opcja. Sprobuj ponownie." << endl;
+			}
+		case 3:
+			break;
+			main();	
+		default:
+			cout << "Nie ma takiej opcji. Wybierz ponownie." << endl;
+			Sleep(2000);
+			main();
+	}
 
 	while(is_running){
 	system("cls");
@@ -89,7 +122,7 @@ int main(){
 	randgap = rand() % 15;
 	randsize = rand() % 5;
 	
-	drawboard(bird, pipe);
+	drawboard(bird, pipes);
 	if(_kbhit()){
 		char key;
 		key = _getch();
@@ -97,7 +130,7 @@ int main(){
 			bird.jump();
 		}
 	}
-	pipe.move();
+	pipes.move();
 	if(framecounter > 2){
 	bird.fall();
 	framecounter = 0;

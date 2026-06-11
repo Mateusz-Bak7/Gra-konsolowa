@@ -1,5 +1,15 @@
 #include <iostream>
+#include <string>
 using namespace std;
+class Bird{
+    public:
+        Bird(string size, string color) {}
+
+        void fly(){
+            cout << "im flying" << endl;
+        }
+};
 int main(){
-    cout << "Hello World" << endl;
+    Bird flappy_bird("big", "red");
+    flappy_bird.fly();
 }
