@@ -47,32 +47,33 @@ void drawboard(Bird bird, vector<Pipe> pipes){
 				if(bird.x == x && bird.y == y){
 					cout << "O";
 				}
-				else if(for(int i = 0; i < pipes.size(); i++)){
-					if(for(int i = 0; pipes.size(); i++)){
-						if(pipes.gapy <= y && pipes.gapy + pipes.gapsize > y){
-							cout << ".";
-							}
-						else{
-							cout << "|";
-						}
-						
-				}
-				}
 				else if(bird.x != x || bird.y != y){
 					cout << ".";
 				}
+				else{
+					for(int i = 0; i < pipes.size(); i++){
+						for(int i = 0; i < pipes.size(); i++){
+							if(y <= pipes[i].gapy && pipes[i].gapy + pipes[i].gapsize > y){
+								cout << ".";
+							}
+							else{
+								cout << "|";
+							}
+						}
+					}
+				}
 			}
 			cout << endl;
+			}
 		}
-}
 
-bool is_running = true;
+bool is_running = false;
 int main(){
 	vector<Pipe> pipes;
 	int randgap;
 	int randsize;
 	int framecounter = 0;
-	int userchoice;
+	string userchoice;
 	int counter = 0;
 	Bird bird(5, 3);
 	pipes.push_back(Pipe(69, 4, 3));
@@ -81,38 +82,8 @@ int main(){
 
 	display();
 	cin >> userchoice;
-	switch(userchoice){
-		case 1:
-			rules();
-			if (_kbhit()){
-				main();
-				break;
-			}
-		case 2:
-			difficulty();
-			userchoice = _getch();
-			if(userchoice == '1'){
-
-			}
-			else if(userchoice == '2'){
-
-			}
-			else if(userchoice == '3'){
-
-			}
-			else if(userchoice == 'E'){
-				main();
-			}
-			else{
-				cout << "Niepoprawna opcja. Sprobuj ponownie." << endl;
-			}
-		case 3:
-			break;
-			main();	
-		default:
-			cout << "Nie ma takiej opcji. Wybierz ponownie." << endl;
-			Sleep(2000);
-			main();
+	if(userchoice == "3"){
+		is_running = true;
 	}
 
 	while(is_running){
@@ -130,7 +101,9 @@ int main(){
 			bird.jump();
 		}
 	}
-	pipes.move();
+	for(int i = 0; i < pipes.size(); i++){
+		pipes[i].move();
+	}
 	if(framecounter > 2){
 	bird.fall();
 	framecounter = 0;
@@ -147,9 +120,10 @@ int main(){
 
 		is_running = false;
 	}
-	if(bird.x == pipe.x && bird.x){ // Warunek do hitboxa
-		if(pipe.gapy <= bird.y && pipe.gapy + pipe.gapsize > bird.y){
-			continue;
+	for(int i = 0; i < pipes.size(); i++){
+	if(bird.x == pipes[i].x && bird.x){ // Warunek do hitboxa
+		if(pipes[i].gapy <= bird.y && pipes[i].gapy + pipes[i].gapsize > bird.y){
+			break;
 		}
 		else{
 			cout << endl;
@@ -164,12 +138,15 @@ int main(){
 			break;
 		}
 	}
+	}
 	framecounter++;
 
-	if(pipe.x < 0){
-		pipe.x = 49;
-		pipe.gapy = randgap;
-		pipe.gapsize = randsize;
+	for(int i = 0; i < pipes.size(); i++){
+		if(pipes[i].x < 0){
+			pipes[i].x = 49;
+			pipes[i].gapy = randgap;
+			pipes[i].gapsize = randsize;
+		}
 	}
 	Sleep(50);
 	}
